@@ -23,7 +23,7 @@ public class ColorSensorTester extends LinearOpMode {
 
         hardwareMapping();
 
-        telemetry.addData( "Finished mapping", "");
+        telemetry.addData("Finished mapping", "");
         telemetry.update();
 
         waitForStart();
