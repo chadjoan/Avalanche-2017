@@ -21,7 +21,6 @@ public class ColorSensorTester extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-
         hardwareMapping();
 
         telemetry.addData( "Finished mapping", "");
@@ -32,8 +31,6 @@ public class ColorSensorTester extends LinearOpMode {
         // Go go gadget robot!
         while (opModeIsActive())
         {
-            colorSensor.argb();
-
             telemetry.addData("Alpha:", colorSensor.alpha());
             telemetry.addData("Red:", colorSensor.red());
             telemetry.addData("Green:", colorSensor.green());
@@ -42,7 +39,6 @@ public class ColorSensorTester extends LinearOpMode {
             telemetry.update();
 
             idle();
-
         }
     }
 }
