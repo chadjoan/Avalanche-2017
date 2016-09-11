@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Created by Keith on 9/11/2016.
  *
  */
-@TeleOp(name = "Color Sensor Tester", group = "utilities")
+@TeleOp(name = "Color Sensor Tester", group = "Utilities")
 public class ColorSensorTester extends LinearOpMode {
 
     ColorSensor colorSensor;

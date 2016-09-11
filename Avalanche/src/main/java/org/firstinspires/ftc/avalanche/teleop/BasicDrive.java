@@ -18,7 +18,7 @@ import org.firstinspires.ftc.avalanche.subsystems.DriveTrainController;
 
 
 
-@TeleOp(name = "BasicDrive")
+@TeleOp(name = "BasicDrive", group = "TeleOp")
 public class BasicDrive extends LinearOpMode {
 
 
