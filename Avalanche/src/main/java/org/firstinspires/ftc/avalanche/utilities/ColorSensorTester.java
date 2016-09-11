@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.avalanche.teleop;
+package org.firstinspires.ftc.avalanche.utilities;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Created by Keith on 9/11/2016.
  *
  */
-@TeleOp(name = "Color Sensor Tester")
+@TeleOp(name = "Color Sensor Tester", group = "utilities")
 public class ColorSensorTester extends LinearOpMode {
 
     ColorSensor colorSensor;
@@ -29,8 +29,15 @@ public class ColorSensorTester extends LinearOpMode {
         waitForStart();
 
         // Go go gadget robot!
-        while (opModeIsActive())
-        {
+        while (opModeIsActive()) {
+
+            if (gamepad1.a) {
+                colorSensor.enableLed(true);
+            }
+            if (gamepad1.b) {
+                colorSensor.enableLed(false);
+            }
+
             telemetry.addData("Alpha:", colorSensor.alpha());
             telemetry.addData("Red:", colorSensor.red());
             telemetry.addData("Green:", colorSensor.green());
