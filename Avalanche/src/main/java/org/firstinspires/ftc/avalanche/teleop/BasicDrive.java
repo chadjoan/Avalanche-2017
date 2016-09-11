@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.avalanche.R;
 import org.firstinspires.ftc.avalanche.utilities.ScaleInput;
 import org.firstinspires.ftc.avalanche.autonomous.ghostauto.MyApplication;
 import org.firstinspires.ftc.avalanche.subsystems.DriveTrainController;
@@ -27,7 +28,7 @@ public class BasicDrive extends LinearOpMode {
     DcMotor motorRightAft;
     DcMotor motorHarvest;
     DriveTrainController driveTrain;
-    MediaPlayer sanic = MediaPlayer.create(MyApplication.getContext(), com.qualcomm.ftcrobotcontroller.R.raw.sanic);
+    MediaPlayer sanic = MediaPlayer.create(MyApplication.getContext(), R.raw.sanic);
 
 
     //Initialize and Map All Hardware
