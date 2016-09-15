@@ -1,47 +1,34 @@
 package org.firstinspires.ftc.avalanche.teleop;
 
-/**
- * Basic drive system used to test drive trains.
- * Currently has sound, which is a feature being tested.
- */
-
-import android.media.MediaPlayer;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.avalanche.R;
 import org.firstinspires.ftc.avalanche.utilities.ScaleInput;
-import org.firstinspires.ftc.avalanche.autonomous.ghostauto.MyApplication;
 import org.firstinspires.ftc.avalanche.subsystems.DriveTrainController;
-
-
 
 @TeleOp(name = "BasicDrive", group = "TeleOp")
 public class BasicDrive extends LinearOpMode {
 
 
-    DcMotor motorLeftFore;
-    DcMotor motorRightFore;
-    DcMotor motorLeftAft;
-    DcMotor motorRightAft;
+    DcMotor motorLeftFront;
+    DcMotor motorRightFront;
+    DcMotor motorLeftBack;
+    DcMotor motorRightBack;
     DcMotor motorHarvest;
     DriveTrainController driveTrain;
-    MediaPlayer sanic = MediaPlayer.create(MyApplication.getContext(), R.raw.sanic);
-
 
     //Initialize and Map All Hardware
     private void hardwareMapping() throws InterruptedException {
-        motorLeftAft = hardwareMap.dcMotor.get("LeftAft");
-        motorLeftFore = hardwareMap.dcMotor.get("LeftFore");
-        motorRightAft = hardwareMap.dcMotor.get("RightAft");
-        motorRightFore = hardwareMap.dcMotor.get("RightFore");
-        motorHarvest = hardwareMap.dcMotor.get("Harvest");
-        motorHarvest.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorLeftBack = hardwareMap.dcMotor.get("LeftBack");
+        motorLeftFront = hardwareMap.dcMotor.get("LeftFront");
+        motorRightBack = hardwareMap.dcMotor.get("RightBack");
+        motorRightFront = hardwareMap.dcMotor.get("RightFront");
+        /*motorHarvest = hardwareMap.dcMotor.get("Harvest");
+        motorHarvest.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
 
 
-        driveTrain = new DriveTrainController(motorLeftAft, motorRightAft, motorLeftFore, motorRightFore);
+        driveTrain = new DriveTrainController(motorLeftFront, motorRightFront, motorLeftBack, motorRightBack);
 
 
         // Reset encoders
@@ -52,25 +39,18 @@ public class BasicDrive extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //   try {
-        //       outputStreamWriter = new OutputStreamWriter(MyApplication.getContext().openFileOutput("auto.txt", Context.MODE_PRIVATE));
-        //   }
-        //   catch (IOException e) {
-        //       Log.e("Exception", "File write failed: " + e.toString());
-        //   }
-
         hardwareMapping();
 
         //telemetry.addData( "Finished mapping", new MyApplication().getApplicationContext());
         telemetry.update();
 
-        sanic.start();
+        /*sanic.start();
 
         waitForStart();
 
         if (sanic.isPlaying()) {
             sanic.stop();
-        }
+        }*/
 
 
         // Go go gadget robot!
@@ -103,7 +83,7 @@ public class BasicDrive extends LinearOpMode {
                 driveTrain.setRightDrivePower(0);
             }
 
-            if (gamepad1.a) {
+            /*if (gamepad1.a) {
                 if (motorHarvest.getPower() != -.6) {
                     motorHarvest.setPower(-.6);
                 } else {
@@ -117,7 +97,7 @@ public class BasicDrive extends LinearOpMode {
                 } else {
                     motorHarvest.setPower(0);
                 }
-            }
+            }*/
 
             idle();
 

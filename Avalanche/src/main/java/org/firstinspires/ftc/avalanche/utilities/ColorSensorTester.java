@@ -43,6 +43,12 @@ public class ColorSensorTester extends LinearOpMode {
             telemetry.addData("Green:", colorSensor.green());
             telemetry.addData("Blue:", colorSensor.blue());
             telemetry.addData("ARGB:", colorSensor.argb());
+            telemetry.addData("Is Red",
+                    ColorReader.isRed(colorSensor.red(), colorSensor.green(), colorSensor.blue()));
+            telemetry.addData("Is Blue",
+                    ColorReader.isBlue(colorSensor.red(), colorSensor.green(), colorSensor.blue()));
+            telemetry.addData("Is Floor",
+                    ColorReader.isFloor(colorSensor.red(), colorSensor.green(), colorSensor.blue()));
             telemetry.update();
 
             idle();
