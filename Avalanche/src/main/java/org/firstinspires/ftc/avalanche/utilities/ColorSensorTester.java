@@ -6,16 +6,24 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * Created by Keith on 9/11/2016.
- *
+ * Change by Austin on 9/17/2016: Modified ColorSensorTester to work with and test new algorithms
  */
 @TeleOp(name = "Color Sensor Tester", group = "Utilities")
 public class ColorSensorTester extends LinearOpMode {
 
-    ColorSensor colorSensor;
+    ColorSensor colorSensorBeacon;
+    ColorSensor colorSensorFloor;
+
+    int initialLight;
 
     //Initialize and Map All Hardware
     private void hardwareMapping() throws InterruptedException {
-        colorSensor = hardwareMap.colorSensor.get("colorSensor");
+        //Initialize and setup color sensors
+        colorSensorBeacon = hardwareMap.colorSensor.get("colorSensorBeacon");
+        colorSensorFloor = hardwareMap.colorSensor.get("colorSensorFloor");
+        colorSensorBeacon.enableLed(false);
+        colorSensorFloor.enableLed(true);
+        initialLight = colorSensorFloor.red() + colorSensorFloor.green() + colorSensorFloor.blue();
     }
 
     @Override
@@ -32,23 +40,34 @@ public class ColorSensorTester extends LinearOpMode {
         while (opModeIsActive()) {
 
             if (gamepad1.a) {
-                colorSensor.enableLed(true);
+                colorSensorFloor.enableLed(true);
             }
             if (gamepad1.b) {
-                colorSensor.enableLed(false);
+                colorSensorFloor.enableLed(false);
             }
 
-            telemetry.addData("Alpha:", colorSensor.alpha());
-            telemetry.addData("Red:", colorSensor.red());
-            telemetry.addData("Green:", colorSensor.green());
-            telemetry.addData("Blue:", colorSensor.blue());
-            telemetry.addData("ARGB:", colorSensor.argb());
+            if (gamepad1.x) {
+                colorSensorBeacon.enableLed(false);
+            }
+
+            if (gamepad1.y) {
+                colorSensorBeacon.enableLed(true);
+            }
+
+            int currentLight = colorSensorFloor.red() + colorSensorFloor.green() + colorSensorFloor.blue();
+
+            telemetry.addData("Beacon Red:", colorSensorBeacon.red());
+            telemetry.addData("Beacon Green:", colorSensorBeacon.green());
+            telemetry.addData("Beacon Blue:", colorSensorBeacon.blue());
+            telemetry.addData("Floor Red:", colorSensorBeacon.red());
+            telemetry.addData("Floor Green:", colorSensorBeacon.green());
+            telemetry.addData("Floor Blue:", colorSensorBeacon.blue());
             telemetry.addData("Is Red",
-                    ColorReader.isRed(colorSensor.red(), colorSensor.green(), colorSensor.blue()));
+                    ColorReader.isRed(colorSensorBeacon.red(), colorSensorBeacon.green(), colorSensorBeacon.blue()));
             telemetry.addData("Is Blue",
-                    ColorReader.isBlue(colorSensor.red(), colorSensor.green(), colorSensor.blue()));
-            telemetry.addData("Is Floor",
-                    ColorReader.isFloor(colorSensor.red(), colorSensor.green(), colorSensor.blue()));
+                    ColorReader.isBlue(colorSensorBeacon.red(), colorSensorBeacon.green(), colorSensorBeacon.blue()));
+            telemetry.addData("Is White",
+                    ColorReader.isWhite(initialLight, currentLight));
             telemetry.update();
 
             idle();

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.avalanche.teleop;
 
+import android.media.MediaPlayer;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,8 +17,9 @@ public class BasicDrive extends LinearOpMode {
     DcMotor motorRightFront;
     DcMotor motorLeftBack;
     DcMotor motorRightBack;
-    DcMotor motorHarvest;
     DriveTrainController driveTrain;
+
+    MediaPlayer sanic;
 
     //Initialize and Map All Hardware
     private void hardwareMapping() throws InterruptedException {
@@ -24,8 +27,6 @@ public class BasicDrive extends LinearOpMode {
         motorLeftFront = hardwareMap.dcMotor.get("LeftFront");
         motorRightBack = hardwareMap.dcMotor.get("RightBack");
         motorRightFront = hardwareMap.dcMotor.get("RightFront");
-        /*motorHarvest = hardwareMap.dcMotor.get("Harvest");
-        motorHarvest.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
 
 
         driveTrain = new DriveTrainController(motorLeftFront, motorRightFront, motorLeftBack, motorRightBack);
@@ -34,6 +35,7 @@ public class BasicDrive extends LinearOpMode {
         // Reset encoders
         driveTrain.resetEncoders();
 
+        sanic = MediaPlayer.create(hardwareMap.appContext, org.firstinspires.ftc.avalanche.R.raw.sanic);
     }
 
     @Override
@@ -41,17 +43,10 @@ public class BasicDrive extends LinearOpMode {
 
         hardwareMapping();
 
-        //telemetry.addData( "Finished mapping", new MyApplication().getApplicationContext());
-        telemetry.update();
-
-        /*sanic.start();
-
         waitForStart();
 
-        if (sanic.isPlaying()) {
-            sanic.stop();
-        }*/
-
+        //Test our media player
+        sanic.start();
 
         // Go go gadget robot!
         while (opModeIsActive()) {
@@ -82,22 +77,6 @@ public class BasicDrive extends LinearOpMode {
                 driveTrain.setLeftDrivePower(0);
                 driveTrain.setRightDrivePower(0);
             }
-
-            /*if (gamepad1.a) {
-                if (motorHarvest.getPower() != -.6) {
-                    motorHarvest.setPower(-.6);
-                } else {
-                    motorHarvest.setPower(0);
-                }
-            }
-
-            if (gamepad1.y) {
-                if (motorHarvest.getPower() != .7) {
-                    motorHarvest.setPower(.7);
-                } else {
-                    motorHarvest.setPower(0);
-                }
-            }*/
 
             idle();
 

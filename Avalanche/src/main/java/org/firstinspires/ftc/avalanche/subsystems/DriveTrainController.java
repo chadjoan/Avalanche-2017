@@ -11,6 +11,11 @@ import org.firstinspires.ftc.avalanche.utilities.ScaleInput;
  * Use setDriveMode to change controls between tank and arcade (defaults to tank)
  */
 
+/**
+ * TO DO:
+ * UPDATE DRIVE TRAIN CONTROLLER TO ACCEPT ODOMETER WHEEL CONFIG
+ */
+
 public class DriveTrainController extends MotorController {
 
     private boolean usingTankDrive;
@@ -100,12 +105,7 @@ public class DriveTrainController extends MotorController {
 
     @Override
     public int size() {
-        return  motors.size();
-    }
-
-    @Override
-    public void runToPosition(int index, double power, int targetPosition) {
-        runToPosition(index, power, targetPosition);
+        return motors.size();
     }
 
 

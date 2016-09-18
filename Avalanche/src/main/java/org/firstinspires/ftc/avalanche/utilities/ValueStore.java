@@ -1,27 +1,41 @@
 package org.firstinspires.ftc.avalanche.utilities;
 
+
 /**
  * Use this class to store values, save them as public static final values so they
  * can be easily accessed from other classes
  */
 public class ValueStore {
+    //Arbitrary Means that a value has not been assigned and needs assigning
+    public static final int ARBITRARYINT = 0;
+    public static final double ARBITRARYDOUBLE = 0;
+
     //Servo Values
-    public static final double RIGHT_ZIP_UP = .7956;
-    public static final double RIGHT_ZIP_DOWN = 0;
-    public static final double LEFT_ZIP_UP = .0657;
-    public static final double LEFT_ZIP_DOWN = .7387;
-    public static final double LOCK_ENGAGED = 1.0;
-    public static final double LOCK_DISENGAGED = .57;
-    public static final double SHELF_STOW_LEFT = .5;
-    public static final double SHELF_STOW_RIGHT = .75;
-    public static final double SHELF_DISPENSE_LEFT = .4133;
-    public static final double SHELF_DISPENSE_RIGHT = .5867;
-    public static final double DISPENSER_NEUTRAL = .38567;
-    public static final double DISPENSER_LEFT = .113;
-    public static final double DISPENSER_RIGHT = 0.6423;
+
+    /** Button Presser Values */
+
+    //Distance to extend button presser to before reaching beacon
+    public static final double BUTTON_PRESSER_DRIVING = ARBITRARYDOUBLE;
+
+    //Distance to extend button presser to press button
+    public static final double BUTTON_PRESSER_PRESSED = ARBITRARYDOUBLE;
+
+    //Button presser's stowed position
+    public static final double BUTTON_PRESSER_RETRACTED = ARBITRARYDOUBLE;
+
+    //Distance to extend button presser to measure colors
+    public static final double BUTTON_PRESSER_MEASURE = ARBITRARYDOUBLE;
+
+    //Button presser's stowed angle
+    public static final double BUTTON_PRESSER_STORE_ANGLE = ARBITRARYDOUBLE;
+
+    //Button presser's right button pressing angle
+    public static final double BUTTON_PRESSER_RIGHT_ANGLE = ARBITRARYDOUBLE;
+
+    //Button presser's left pressing angle
+    public static final double BUTTON_PRESSER_LEFT_ANGLE = ARBITRARYDOUBLE;
+
 
     //Motor Positions
-    public double slideBotPosition = -2825;
-    public double slideMidPosition = -2188;
-    public double slideTopPosition = 7600;
+
 }
