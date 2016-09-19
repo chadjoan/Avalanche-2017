@@ -63,6 +63,15 @@ public class MotorController {
         }
     }
 
+    //sets power to all motors
+    //Also changes to manuel mode if manualOverride is enabled or the motor has already reached it's target
+    public void setPower(double power) {
+        for (int index = 0; index < motors.size(); index++)
+        {
+            setPower(index, power);
+        }
+    }
+
     //sets power at given index
     //Also changes to manuel mode if manualOverride is enabled or the motor has already reached it's target
     public void setPower(int index, double power) {
