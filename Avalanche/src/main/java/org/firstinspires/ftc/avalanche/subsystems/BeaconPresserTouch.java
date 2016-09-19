@@ -3,6 +3,7 @@ package org.firstinspires.ftc.avalanche.subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.avalanche.enums.BeaconState;
 import org.firstinspires.ftc.avalanche.enums.TeamColor;
@@ -22,18 +23,22 @@ import org.firstinspires.ftc.avalanche.utilities.ValueStore;
  *
  * Updated by austin zhang on 9/19/16:
  * Made redundancy time based instead of cycle based.
+ * Added touch sensor logic to use touch sensor.
  */
-public class BeaconPresser {
+public class BeaconPresserTouch {
 
     //Declare hardware
     private Servo extendServo;
     private Servo selectorServo;
     private ColorSensor colorLeft;
     private ColorSensor colorRight;
+    private TouchSensor touchSensor;
     private TeamColor teamColor;
     private LinearOpMode operation;
 
-    public BeaconPresser(LinearOpMode opMode, TeamColor teamColor, Servo extendServo, Servo selectorServo, ColorSensor leftSensor, ColorSensor rightSensor) {
+    private long startTime;
+
+    public BeaconPresserTouch(LinearOpMode opMode, TeamColor teamColor, Servo extendServo, Servo selectorServo, ColorSensor leftSensor, ColorSensor rightSensor, TouchSensor touchSensor) {
         //Set team
         this.teamColor = teamColor;
 
@@ -44,6 +49,8 @@ public class BeaconPresser {
         this.selectorServo = selectorServo;
         this.colorLeft = leftSensor;
         this.colorRight = rightSensor;
+        this.touchSensor = touchSensor;
+
 
         //Set initial values
         this.extendServo.setPosition(ValueStore.BUTTON_PRESSER_RETRACTED);
@@ -61,16 +68,16 @@ public class BeaconPresser {
 
         // Figure out what the current beacon state is.
         // If the robot can't figure it out in time, the robot quits and moves on.
-        long startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
 
         BeaconState currentState = beaconState(redundancy);
 
-        while (currentState.equals(BeaconState.UNDECIDED) && (System.currentTimeMillis() - startTime) < timeoutMilliseconds) {
+        while (currentState.equals(BeaconState.UNDECIDED) && (System.currentTimeMillis() - startTime) < timeoutMilliseconds && !touchSensor.isPressed()) {
             currentState = beaconState(redundancy);
             operation.idle();
         }
 
-        if (currentState.equals(BeaconState.UNDECIDED)) {
+        if (currentState.equals(BeaconState.UNDECIDED) || touchSensor.isPressed()) {
             selectorServo.setPosition(ValueStore.BUTTON_PRESSER_STORE_ANGLE);
             extendServo.setPosition(ValueStore.BUTTON_PRESSER_RETRACTED);
             return;
@@ -99,7 +106,7 @@ public class BeaconPresser {
 
         // Wait for the colors change,
         // if the colors change as desired, the robot quits and moves on.
-        while ((System.currentTimeMillis() - startTime) < timeoutMilliseconds) {
+        while ((System.currentTimeMillis() - startTime) < timeoutMilliseconds && !touchSensor.isPressed()) {
             BeaconState curState = beaconState(redundancy);
 
             if (teamColor.equals(TeamColor.RED) && curState.equals(BeaconState.RED_LEFT_RED_RIGHT)) {
@@ -131,6 +138,26 @@ public class BeaconPresser {
             }
         }
 
+        long pressTime;
+
+        //If we timed out instead of pressing the touch sensor. We're probably too far from the
+        //Beacon or super misaligned, we should just quit.
+        if (!touchSensor.isPressed()) {
+            selectorServo.setPosition(ValueStore.BUTTON_PRESSER_STORE_ANGLE);
+            extendServo.setPosition(ValueStore.BUTTON_PRESSER_RETRACTED);
+            return;
+        }
+        else {
+            //We might be misaligned but we might also just be too quick after our partner hit the button.
+            //If more than 5 seconds has passed before we attempted to press the button however, this isn't the case
+            pressTime = System.currentTimeMillis();
+            if (pressTime - startTime > 5000) {
+                selectorServo.setPosition(ValueStore.BUTTON_PRESSER_STORE_ANGLE);
+                extendServo.setPosition(ValueStore.BUTTON_PRESSER_RETRACTED);
+                return;
+            }
+        }
+
 
         // If the robot didn't miss the button, and we simply pressed the button too quickly after
         // our alliance partner selected the wrong color,
@@ -148,11 +175,10 @@ public class BeaconPresser {
             selectorServo.setPosition(ValueStore.BUTTON_PRESSER_RIGHT_ANGLE);
         }
 
-        int remainingTimeoutMillis = 5000 - timeoutMilliseconds;
-
         long startTimeTwo = System.currentTimeMillis();
 
-        while (remainingTimeoutMillis > (System.currentTimeMillis() - startTimeTwo)) {
+        while (touchSensor.isPressed() || System.currentTimeMillis() - startTimeTwo < 5000 - (pressTime - startTime)) {
+            extendServo.setPosition(ValueStore.BUTTON_PRESSER_MEASURE);
             operation.idle();
         }
 
@@ -160,7 +186,7 @@ public class BeaconPresser {
 
 
         long startTimeThree = System.currentTimeMillis();
-        while (ValueStore.TIME_TO_BUTTON_PRESS_FROM_MEASURE_DISTANCE_MILLIS > (System.currentTimeMillis() - startTimeThree)) {
+        while (ValueStore.TIME_TO_BUTTON_PRESS_FROM_MEASURE_DISTANCE_MILLIS > (System.currentTimeMillis() - startTimeThree) && !touchSensor.isPressed()) {
             operation.idle();
         }
 
@@ -176,7 +202,7 @@ public class BeaconPresser {
     // Redundancy makes sure that the state is the same for multiple
     // runs, ensuring that a temporary flash of light or glitch in the
     // color sensor doesn't cause a false positive.
-    // Redundancy is time based.
+    // Redundancy is time based
     private BeaconState beaconState(long redundancy) {
         int leftRed = colorLeft.red();
         int leftGreen = colorLeft.green();
@@ -208,9 +234,9 @@ public class BeaconPresser {
             }
         }
 
-        long redundancyStartTime = System.currentTimeMillis();
+        long redundancyStart = System.currentTimeMillis();
 
-        while (System.currentTimeMillis() - redundancyStartTime < redundancy) {
+        while (System.currentTimeMillis() - redundancyStart < redundancy) {
             if (ColorReader.isBlue(leftRed, leftGreen, leftBlue)) {
                 if (ColorReader.isBlue(rightRed, rightGreen, rightBlue)) {
                     if (!firstState.equals(BeaconState.BLUE_LEFT_BLUE_RIGHT)) {

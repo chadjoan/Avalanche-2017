@@ -35,6 +35,8 @@ public class ValueStore {
     //Button presser's left pressing angle
     public static final double BUTTON_PRESSER_LEFT_ANGLE = 0.245;
 
+    //Button presser's time to move from the measuring position to the pressing position
+    public static final double TIME_TO_BUTTON_PRESS_FROM_MEASURE_DISTANCE_MILLIS = 2000; //ARBITRARY
 
     //Motor Positions
 
