@@ -4,6 +4,11 @@ package org.firstinspires.ftc.avalanche.utilities;
  * Created by Keith on 9/14/2016.
  * Change by Austin on 9/17/2016: Modified detection algorithm for color detection to be based
  * off of %RGB instead of static RGB values. - Needs calibration
+ *
+ * TO DO: CENTRALIZE PERCENTAGES - move the percentage threshold values and other
+ * arbitrary values determined through calibration
+ * to ValueStore, our central value storing location so if we want to change values
+ * we don't have to look through multiple classes to find the correct value.
  */
 public class ColorReader {
 
@@ -14,7 +19,7 @@ public class ColorReader {
         int percentageThreshold = 40;
 
 
-        return isColor(percentageThreshold, 15, red, green, blue);
+        return isColor(percentageThreshold, 4, red, green, blue);
     }
 
     // LED must be OFF
@@ -24,7 +29,7 @@ public class ColorReader {
         int percentageThreshold = 40;
 
 
-        return isColor(percentageThreshold, 15, blue, green, red);
+        return isColor(percentageThreshold, 4, blue, green, red);
     }
 
     // LED must be ON

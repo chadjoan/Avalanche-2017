@@ -16,11 +16,17 @@ import org.firstinspires.ftc.avalanche.utilities.ValueStore;
  * and call startButtonPress after lining up with the beacon.
  * Redundancy makes sure that a flash of light or temporary glitch in the
  * color sensor doesn't trigger a false positive.
- * Make it so that detecting that a beacon is blue or red once isn't good enough
- * Make it so that you would need to detect that the beacon is red multiple times
- * before it is accepted that the beacon is actually red
+ * Redundancy makes it so that detecting that a beacon is blue or red once isn't good enough
+ * you would need to detect that the beacon is red multiple times
+ * before it is accepted that the beacon is actually red.
+ *
+ * TO CHANGE: Make redundancy time based instead of cycle based.
+ * To do this we need to figure out how long a cycle actually is
+ * so that we know approx how many cycles there are per time
+ * (we don't actually need this but it would be good to know if we
+ * for example set a redundancy of 100 ms how many cycles there are.
  */
-public class ButtonPresser {
+public class BeaconPresser {
 
     //Declare hardware
     private Servo extendServo;
@@ -30,7 +36,7 @@ public class ButtonPresser {
     private TeamColor teamColor;
     private LinearOpMode operation;
 
-    public ButtonPresser(LinearOpMode opMode, TeamColor teamColor, Servo extendServo, Servo selectorServo, ColorSensor leftSensor, ColorSensor rightSensor) {
+    public BeaconPresser(LinearOpMode opMode, TeamColor teamColor, Servo extendServo, Servo selectorServo, ColorSensor leftSensor, ColorSensor rightSensor) {
         //Set team
         this.teamColor = teamColor;
 
@@ -48,7 +54,7 @@ public class ButtonPresser {
     }
 
     public void setPresserToDrivePosition() {
-        selectorServo.setPosition(ValueStore.BUTTON_PRESSER_DRIVING);
+        extendServo.setPosition(ValueStore.BUTTON_PRESSER_DRIVING);
     }
 
     public void startButtonPress(int timeoutMilliseconds, int redundancy) throws InterruptedException {
@@ -173,7 +179,7 @@ public class ButtonPresser {
     // Redundancy makes sure that the state is the same for multiple
     // runs, ensuring that a temporary flash of light or glitch in the
     // color sensor doesn't cause a false positive.
-    public BeaconState beaconState(int redundancy) {
+    private BeaconState beaconState(int redundancy) {
         int leftRed = colorLeft.red();
         int leftGreen = colorLeft.green();
         int leftBlue = colorLeft.blue();
