@@ -26,10 +26,10 @@ public class DriveTrainController extends MotorController {
     //Constructors
 
     public DriveTrainController(DcMotor leftBack, DcMotor rightBack, DcMotor leftFront, DcMotor rightFront) {
-        motors.add(leftBack);
-        motors.add(rightBack);
-        motors.add(leftFront);
-        motors.add(rightFront);
+        add(leftBack);
+        add(rightBack);
+        add(leftFront);
+        add(rightFront);
 
         //Reverse right motors because gearing is flipped
         reverseMotors(1);
@@ -39,8 +39,8 @@ public class DriveTrainController extends MotorController {
     }
 
     public DriveTrainController(DcMotor left, DcMotor right) {
-        motors.add(left);
-        motors.add(right);
+        add(left);
+        add(right);
 
         //Reverse right motor because gearing is flipped
         reverseMotors(1);

@@ -28,9 +28,7 @@ public class BasicDrive extends LinearOpMode {
         motorRightBack = hardwareMap.dcMotor.get("RightBack");
         motorRightFront = hardwareMap.dcMotor.get("RightFront");
 
-
         driveTrain = new DriveTrainController(motorLeftFront, motorRightFront, motorLeftBack, motorRightBack);
-
 
         // Reset encoders
         driveTrain.resetEncoders();
@@ -46,7 +44,7 @@ public class BasicDrive extends LinearOpMode {
         waitForStart();
 
         //Test our media player
-        sanic.start();
+        //sanic.start();
 
         // Go go gadget robot!
         while (opModeIsActive()) {

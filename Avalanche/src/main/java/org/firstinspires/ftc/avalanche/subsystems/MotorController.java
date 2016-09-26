@@ -19,6 +19,7 @@ public class MotorController {
         autoOverrideEnabled = true;
     }
 
+
     //Adds motor to controller and saves it's current value as a start value.
     //Initializes motor to RUN_USING_ENCODERS, sets the power to 0, and the target position to it's current position.
     public void add(DcMotor motor) {
@@ -27,6 +28,11 @@ public class MotorController {
         motor.setPower(0);
         motors.add(motor);
         encoderStartValues.add(motor.getCurrentPosition());
+    }
+
+    public DcMotor get(int index)
+    {
+        return motors.get(index);
     }
 
     public int size() {
