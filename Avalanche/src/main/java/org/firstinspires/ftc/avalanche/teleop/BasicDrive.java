@@ -18,9 +18,7 @@ public class BasicDrive extends LinearOpMode {
     DcMotor motorLeftBack;
     DcMotor motorRightBack;
     DriveTrainController driveTrain;
-
-    MediaPlayer sanic;
-
+    
     //Initialize and Map All Hardware
     private void hardwareMapping() throws InterruptedException {
         motorLeftBack = hardwareMap.dcMotor.get("LeftBack");
