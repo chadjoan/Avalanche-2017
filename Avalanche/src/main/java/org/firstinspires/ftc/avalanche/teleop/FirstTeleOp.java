@@ -18,7 +18,6 @@ public class FirstTeleOp extends LinearOpMode {
 
         waitForStart();
 
-
         // Go go gadget robot!
         while (opModeIsActive()) {
 
