@@ -12,8 +12,6 @@ public class ColeFirstTeleOp extends LinearOpMode {
     private DcMotor motorRightFront;
     private DcMotor motorRightBack;
 
-    //git message
-
     @Override
     public void runOpMode() throws InterruptedException {
 
