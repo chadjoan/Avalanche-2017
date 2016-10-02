@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.avalanche.subsystems.DriveTrainController;
 import org.firstinspires.ftc.avalanche.utilities.ScaleInput;
 
-@TeleOp(name = "Cole's First Teleop", group = "Education")
+@TeleOp(name = "First Teleop", group = "Education")
 public class FirstTeleOp extends LinearOpMode {
 
     @Override
@@ -20,7 +20,7 @@ public class FirstTeleOp extends LinearOpMode {
 
         // Go go gadget robot!
         while (opModeIsActive()) {
-            
+
             idle();
 
         }
