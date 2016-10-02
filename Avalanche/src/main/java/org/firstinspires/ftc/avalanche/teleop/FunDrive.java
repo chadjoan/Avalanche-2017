@@ -68,7 +68,7 @@ public class FunDrive extends LinearOpMode {
             {
                 if (modifierKey)
                 {
-                    turnSpeed += 0.01;
+                    turnSpeed += 0.1;
                     if (Double.compare(turnSpeed, 1.0) > 0)
                     {
                         turnSpeed = 1.0;
@@ -76,7 +76,7 @@ public class FunDrive extends LinearOpMode {
                 }
                 else
                 {
-                    driveSpeed += 0.01;
+                    driveSpeed += 0.1;
                     if (Double.compare(driveSpeed, 1.0) > 0)
                     {
                         driveSpeed = 1.0;
@@ -88,7 +88,7 @@ public class FunDrive extends LinearOpMode {
             {
                 if (modifierKey)
                 {
-                    turnSpeed -= 0.01;
+                    turnSpeed -= 0.1;
                     if (Double.compare(turnSpeed, 0.1) < 0)
                     {
                         turnSpeed = 0.1;
@@ -96,7 +96,7 @@ public class FunDrive extends LinearOpMode {
                 }
                 else
                 {
-                    driveSpeed -= 0.01;
+                    driveSpeed -= 0.1;
                     if (Double.compare(driveSpeed, 0.1) < 0)
                     {
                         driveSpeed = 0.1;
