@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.avalanche.teleop;
+package org.firstinspires.ftc.avalanche.education;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
