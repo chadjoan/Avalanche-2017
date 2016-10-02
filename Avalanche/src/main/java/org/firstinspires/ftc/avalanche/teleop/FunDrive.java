@@ -22,6 +22,11 @@ public class FunDrive extends LinearOpMode {
     private double driveSpeed = 1.0;
     private double turnSpeed = 0.2;
 
+    private int countB = 0;
+    private int countBAlt = 0;
+    private int countX = 0;
+    private int countXAlt = 0;
+
     //Initialize and Map All Hardware
     private void hardwareMapping() throws InterruptedException {
         motorLeftBack = hardwareMap.dcMotor.get("LeftBack");
@@ -68,6 +73,7 @@ public class FunDrive extends LinearOpMode {
             {
                 if (modifierKey)
                 {
+                    countBAlt++;
                     turnSpeed += 0.1;
                     if (Double.compare(turnSpeed, 1.0) > 0)
                     {
@@ -76,6 +82,7 @@ public class FunDrive extends LinearOpMode {
                 }
                 else
                 {
+                    countB++;
                     driveSpeed += 0.1;
                     if (Double.compare(driveSpeed, 1.0) > 0)
                     {
@@ -83,11 +90,17 @@ public class FunDrive extends LinearOpMode {
                     }
                 }
             }
+            else
+            {
+                countB = 0;
+                countBAlt = 0;
+            }
 
             if (gamepad1.x)
             {
                 if (modifierKey)
                 {
+                    countXAlt++;
                     turnSpeed -= 0.1;
                     if (Double.compare(turnSpeed, 0.1) < 0)
                     {
@@ -96,12 +109,18 @@ public class FunDrive extends LinearOpMode {
                 }
                 else
                 {
+                    countX++;
                     driveSpeed -= 0.1;
                     if (Double.compare(driveSpeed, 0.1) < 0)
                     {
                         driveSpeed = 0.1;
                     }
                 }
+            }
+            else
+            {
+                countX = 0;
+                countXAlt = 0;
             }
 
             if (gamepad1.y)
