@@ -12,4 +12,28 @@
 // Custom definitions may go here
 
 // Include common definitions from above.
-apply from: '../build.common.gradle'
+if ( rootProject.buildAndroid )
+{
+	sourceSets.main.java {
+		srcDir 'src/main/java'
+		exclude 'org/firstinspires/ftc/avalanche_desktop/**'
+	}
+
+	apply from: '../ftc_app/build.common.gradle'
+}
+else
+{
+	apply plugin: 'application'
+	mainClassName = "org.firstinspires.ftc.avalanche_desktop.DesktopMain"
+	sourceSets.main.java {
+		srcDir 'src/main/java'
+		exclude 'org/firstinspires/ftc/avalanche/**'
+	}
+	jar.manifest {
+		attributes 'Main-Class': mainClassName
+	}
+
+	//dependencies {
+	//	compile project(':AvalancheModularityLayer')
+	//}
+}
